@@ -1,0 +1,75 @@
+﻿/************************************************************/
+/*****              SqlDataProvider                     *****/
+/*****                                                  *****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for {databaseOwner} and {objectQualifier}  *****/
+/*****                                                  *****/
+/************************************************************/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[VwcNewCourseOfferings]') AND type in (N'U'))
+DROP TABLE [dbo].[VwcNewCourseOfferings]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[VwcNewCourseOfferings](
+	[ID] [int] NOT NULL,
+	[CourseTerm] [nvarchar](16) NOT NULL,
+	[CourseNumber] [nvarchar](5) NOT NULL,
+	[SectionID] [nvarchar](1) NOT NULL,
+	[InstructorID] [int] NULL,
+	[SectionDates] [nvarchar](128) NULL,
+	[SectionDatesNote] [nvarchar](255) NULL,
+	[SectionSize] [int] NULL,
+	[PrerequisiteCourse] [nvarchar](32) NULL,
+	[SectionSupplies] [nvarchar](128) NULL
+	[SectionSuppliesFee] [int] NULL,
+	[SectionClosedDate] [smalldatetime] NULL,
+	[InstructorName] [nvarchar](128) NULL,
+	[InstructorEMail] [nvarchar](64) NULL,
+	[InstructorHomePhone] [nvarchar](20) NULL,
+	[InstructorCellPhone] [nvarchar](20) NULL,
+    [ModuleId] INT NOT NULL,
+	[CreatedOnDate] DATETIME NOT NULL,
+	[CreatedByUserId] INT NOT NULL,
+	[LastModifiedOnDate] DATETIME NOT NULL,
+	[LastModifiedByUserId] INT NOT NULL
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+ALTER TABLE [dbo].[VwcNewCourseOfferings] ADD  CONSTRAINT [PK_VwcNewCourseOfferings] PRIMARY KEY CLUSTERED
+(
+	[ID] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[VwcNewCourseOfferings] ADD  CONSTRAINT [AK_VwcNewCourseOfferings] UNIQUE 
+(
+	[CourseTerm] ASC,
+	[CourseNumber] ASC,
+	[SectionID] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[VwcNewCourseOfferings] ADD  CONSTRAINT [DF_VwcNewCourseOfferings_ModuleId]  DEFAULT ((1084)) FOR [ModuleId]
+GO
+ALTER TABLE [dbo].[VwcNewCourseOfferings] ADD  DEFAULT (getdate()) FOR [CreatedOnDate]
+GO
+ALTER TABLE [dbo].[VwcNewCourseOfferings] ADD  CONSTRAINT [DF_VwcNewCourseOfferings_CreatedByUserId]  DEFAULT ((1)) FOR [CreatedByUserID]
+GO
+ALTER TABLE [dbo].[VwcNewCourseOfferings] ADD  DEFAULT (getdate()) FOR [LastModifiedOnDate]
+GO
+ALTER TABLE [dbo].[VwcNewCourseOfferings] ADD  CONSTRAINT [DF_VwcNewCourseOfferings_LastModifiedByUserID]  DEFAULT ((2)) FOR [LastModifiedByUserID]
+GO
+
+
+
+
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/************************************************************/

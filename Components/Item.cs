@@ -18,9 +18,9 @@ using DotNetNuke.Entities.Content;
 
 namespace Vwc.Modules.VwcCourseOfferingDefine.Components
 {
-    [TableName("VwcCourseOfferingDefine_Items")]
+    [TableName("VwcNewCourseOfferings")]
     //setup the primary key for table
-    [PrimaryKey("ItemId", AutoIncrement = true)]
+    [PrimaryKey("Id", AutoIncrement = true)]
     //configure caching using PetaPoco
     [Cacheable("Items", CacheItemPriority.Default, 20)]
     //scope the objects to the ModuleId of a module on a page (or copy of a module on a page)
@@ -30,17 +30,26 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
         ///<summary>
         /// The ID of your object with the name of the ItemName
         ///</summary>
-        public int ItemId { get; set; }
+        public int Id { get; set; }
         ///<summary>
-        /// A string with the name of the ItemName
+        /// A string with the term of the course Offering
         ///</summary>
-        public string ItemName { get; set; }
-
-        ///<summary>
-        /// A string with the description of the object
-        ///</summary>
-        public string ItemDescription { get; set; }
-
+        public string CourseTerm { get; set; }
+        public string CourseNumber { get; set; }
+        public string CourseSection { get; set; }
+        public int InstructorID { get; set; }
+        public string SectionDates { get; set; }         
+        public string SectionNote { get; set; }
+        public int SectionSize { get; set; }
+        public string PrerequisiteCourse { get; set; }
+        public string SectionSupplies { get; set; }
+        public int SectionSuppliesFee { get; set; }
+        public DateTime SectionClosedDate { get; set; }
+        public string InstructorName { get; set; }
+        public string InstructorEmail { get; set; }
+        public string InstructorHomePhone { get; set; }
+        public string InstructorCellPhone { get; set; }
+              
         ///<summary>
         /// An integer with the user id of the assigned user for the object
         ///</summary>
