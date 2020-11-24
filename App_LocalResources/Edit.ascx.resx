@@ -132,22 +132,70 @@
   <data name="lblAssignedUser.Text" xml:space="preserve">
     <value>Assigned User</value>
   </data>
-  <data name="lblDescription.Help" xml:space="preserve">
-    <value>Enter a Description for your Item</value>
+  <data name="lblCourseNumber.Help" xml:space="preserve">
+    <value>Choose Course Number from the drop down list above</value>
   </data>
-  <data name="lblDescription.Text" xml:space="preserve">
-    <value>Description</value>
+  <data name="lblCourseNumber.Text" xml:space="preserve">
+    <value>VWC Course Number</value>
   </data>
-  <data name="lblName.Help" xml:space="preserve">
-    <value>Enter the Name for your Item</value>
+  <data name="lblCourseTerm.Help" xml:space="preserve">
+    <value>Enter the course term, such as Fall 2025</value>
   </data>
   <data name="lblName.Text" xml:space="preserve">
-    <value>Name</value>
+    <value>Course Term</value>
   </data>
   <data name="BasicSettings.Text" xml:space="preserve">
     <value>VwcCourseOfferingDefine Item Basic Settings</value>
   </data>
   <data name="ExpandAll.Text" xml:space="preserve">
     <value>Expand All</value>
+  </data>
+  <data name="lblCourseSection.Help" xml:space="preserve">
+    <value>Enter the Course Section, single alphabetic character</value>
+  </data>
+  <data name="lblCourseSection.Text" xml:space="preserve">
+    <value>CourseSection</value>
+  </data>
+  <data name="lblPrerequisiteCourse.Help" xml:space="preserve">
+    <value>Enter any prerequisite courses or instructions</value>
+  </data>
+  <data name="lblPrerequisiteCourse.Text" xml:space="preserve">
+    <value>Prerequisite Course(s)</value>
+  </data>
+  <data name="lblSectionClosedDate.Help" xml:space="preserve">
+    <value>Select that date on which theis section will be closed for registration</value>
+  </data>
+  <data name="lblSectionClosedDate.Text" xml:space="preserve">
+    <value>Section Closed Date</value>
+  </data>
+  <data name="lblSectionDates.Help" xml:space="preserve">
+    <value>Enter the section dates </value>
+  </data>
+  <data name="lblSectionDates.Text" xml:space="preserve">
+    <value>Section Dates</value>
+  </data>
+  <data name="lblSectionNotes.Help" xml:space="preserve">
+    <value>Enter notes pertain to meeting dates or times...OR section meeting times</value>
+  </data>
+  <data name="lblSectionNotes.Text" xml:space="preserve">
+    <value>Section Notes</value>
+  </data>
+  <data name="lblSectionSize.Help" xml:space="preserve">
+    <value>Enter the MAXIMUM number of students for this section, between 1 and 99</value>
+  </data>
+  <data name="lblSectionSize.Text" xml:space="preserve">
+    <value>Class Size</value>
+  </data>
+  <data name="lblSectionSupplies.Help" xml:space="preserve">
+    <value>Enter a description of the supplies requires/provided for this course</value>
+  </data>
+  <data name="lblSectionSupplies.Text" xml:space="preserve">
+    <value>Section Supplies</value>
+  </data>
+  <data name="lblSectionSuppliesFee.Help" xml:space="preserve">
+    <value>Enter the cost in dollars and cents, i.e. such as 10.00 for the supplies</value>
+  </data>
+  <data name="lblSectionSuppliesFee.Text" xml:space="preserve">
+    <value>Supplies Fee</value>
   </data>
 </root>

@@ -60,15 +60,15 @@ namespace Vwc.Modules.VwcCourseOfferingDefine
 
                 var pnlAdminControls = e.Item.FindControl("pnlAdmin") as Panel;
 
-                var t = (Item)e.Item.DataItem;
+                var t = (CourseOffering)e.Item.DataItem;
 
                 if (IsEditable && lnkDelete != null && lnkEdit != null && pnlAdminControls != null)
                 {
                     pnlAdminControls.Visible = true;
-                    lnkDelete.CommandArgument = t.ItemId.ToString();
+                    lnkDelete.CommandArgument = t.Id.ToString();
                     lnkDelete.Enabled = lnkDelete.Visible = lnkEdit.Enabled = lnkEdit.Visible = true;
 
-                    lnkEdit.NavigateUrl = EditUrl(string.Empty, string.Empty, "Edit", "tid=" + t.ItemId);
+                    lnkEdit.NavigateUrl = EditUrl(string.Empty, string.Empty, "Edit", "tid=" + t.Id);
 
                     ClientAPI.AddButtonConfirm(lnkDelete, Localization.GetString("ConfirmDelete", LocalResourceFile));
                 }

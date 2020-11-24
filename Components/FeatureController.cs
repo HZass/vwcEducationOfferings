@@ -64,11 +64,11 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
                     item.LastModifiedOnDate.ToUniversalTime() >= DateTime.UtcNow)
                     continue;
 
-                var content = string.Format("{0}<br />{1}", item.ItemName, item.ItemDescription);
+                var content = string.Format("{0}<br />{1}", item.CourseNumber, item.CourseSection);
 
                 var searchDocumnet = new SearchDocument
                 {
-                    UniqueKey = string.Format("Items:{0}:{1}", moduleInfo.ModuleID, item.ItemId),  // any unique identifier to be able to query for your individual record
+                    UniqueKey = string.Format("Items:{0}:{1}", moduleInfo.ModuleID, item.CourseNumber),  // any unique identifier to be able to query for your individual record
                     PortalId = moduleInfo.PortalID,  // the PortalID
                     TabId = moduleInfo.TabID, // the TabID
                     AuthorUserId = item.LastModifiedByUserId, // the person who created the content
@@ -85,87 +85,88 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
 
             return searchDocuments;
         }
+        /*
+               /// -----------------------------------------------------------------------------
+               /// <summary>
+               /// ExportModule implements the IPortable ExportModule Interface
+               /// </summary>
+               /// <param name="moduleId">The Id of the module to be exported</param>
+               /// -----------------------------------------------------------------------------
+               public string ExportModule(int moduleId)
+               {
+                   var controller = new ItemController();
+                   var items = controller.GetItems(moduleId);
+                   var sb = new StringBuilder();
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// ExportModule implements the IPortable ExportModule Interface
-        /// </summary>
-        /// <param name="moduleId">The Id of the module to be exported</param>
-        /// -----------------------------------------------------------------------------
-        public string ExportModule(int moduleId)
-        {
-            var controller = new ItemController();
-            var items = controller.GetItems(moduleId);
-            var sb = new StringBuilder();
+                   var itemList = items as IList<CourseOffering> ?? items.ToList();
 
-            var itemList = items as IList<Item> ?? items.ToList();
+                   if (!itemList.Any()) return string.Empty;
 
-            if (!itemList.Any()) return string.Empty;
+                   sb.Append("<Items>");
 
-            sb.Append("<Items>");
+                   foreach (CourseOffering item in itemList)
+                   {
+                       sb.Append("<CourseOffering>");
 
-            foreach (Item item in itemList)
-            {
-                sb.Append("<Item>");
+                       sb.AppendFormat("<AssignedUserId>{0}</AssignedUserId>", item.AssignedUserId);
+                       sb.AppendFormat("<CreatedByUserId>{0}</CreatedByUserId>", item.CreatedByUserId);
+                       sb.AppendFormat("<CreatedOnDate>{0}</CreatedOnDate>", item.CreatedOnDate);
+                       sb.AppendFormat("<ItemId>{0}</ItemId>", item.ItemId);
+                       sb.AppendFormat("<ItemDescription>{0}</ItemDescription>", XmlUtils.XMLEncode(item.ItemDescription));
+                       sb.AppendFormat("<ItemName>{0}</ItemName>", XmlUtils.XMLEncode(item.ItemName));
+                       sb.AppendFormat("<LastModifiedByUserId>{0}</LastModifiedByUserId>", item.LastModifiedByUserId);
+                       sb.AppendFormat("<LastModifiedOnDate>{0}</LastModifiedOnDate>", item.LastModifiedOnDate);
+                       sb.AppendFormat("<ModuleId>{0}</ModuleId>", item.ModuleId);
 
-                sb.AppendFormat("<AssignedUserId>{0}</AssignedUserId>", item.AssignedUserId);
-                sb.AppendFormat("<CreatedByUserId>{0}</CreatedByUserId>", item.CreatedByUserId);
-                sb.AppendFormat("<CreatedOnDate>{0}</CreatedOnDate>", item.CreatedOnDate);
-                sb.AppendFormat("<ItemId>{0}</ItemId>", item.ItemId);
-                sb.AppendFormat("<ItemDescription>{0}</ItemDescription>", XmlUtils.XMLEncode(item.ItemDescription));
-                sb.AppendFormat("<ItemName>{0}</ItemName>", XmlUtils.XMLEncode(item.ItemName));
-                sb.AppendFormat("<LastModifiedByUserId>{0}</LastModifiedByUserId>", item.LastModifiedByUserId);
-                sb.AppendFormat("<LastModifiedOnDate>{0}</LastModifiedOnDate>", item.LastModifiedOnDate);
-                sb.AppendFormat("<ModuleId>{0}</ModuleId>", item.ModuleId);
+                       sb.Append("</CourseOffering>");
+                   }
 
-                sb.Append("</Item>");
-            }
+                   sb.Append("</Items>");
 
-            sb.Append("</Items>");
+                   // you might consider doing something similar here for any important module settings
 
-            // you might consider doing something similar here for any important module settings
+                   return sb.ToString();
+               }
 
-            return sb.ToString();
-        }
+               /// -----------------------------------------------------------------------------
+               /// <summary>
+               /// ImportModule implements the IPortable ImportModule Interface
+               /// </summary>
+               /// <param name="moduleId">The Id of the module to be imported</param>
+               /// <param name="content">The content to be imported</param>
+               /// <param name="version">The version of the module to be imported</param>
+               /// <param name="userId">The Id of the user performing the import</param>
+               /// -----------------------------------------------------------------------------
+              public void ImportModule(int moduleId, string content, string version, int userId)
+               {
+                   var controller = new ItemController();
+                   var items = DotNetNuke.Common.Globals.GetContent(content, "Items");
+                   var xmlNodeList = items.SelectNodes("CourseOffering");
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// ImportModule implements the IPortable ImportModule Interface
-        /// </summary>
-        /// <param name="moduleId">The Id of the module to be imported</param>
-        /// <param name="content">The content to be imported</param>
-        /// <param name="version">The version of the module to be imported</param>
-        /// <param name="userId">The Id of the user performing the import</param>
-        /// -----------------------------------------------------------------------------
-        public void ImportModule(int moduleId, string content, string version, int userId)
-        {
-            var controller = new ItemController();
-            var items = DotNetNuke.Common.Globals.GetContent(content, "Items");
-            var xmlNodeList = items.SelectNodes("Item");
+                   if (xmlNodeList == null) return;
 
-            if (xmlNodeList == null) return;
+                   foreach (XmlNode item in xmlNodeList)
+                   {
+                       var newItem = new CourseOffering()
+                       {
+                           ModuleId = moduleId,
+                           // assigning everything to the current UserID, because this might be a new DNN installation
+                           // your use case might be different though
+                           CreatedByUserId = userId,
+                           LastModifiedByUserId = userId,
+                           CreatedOnDate = DateTime.Now,
+                           LastModifiedOnDate = DateTime.Now
+                       };
 
-            foreach (XmlNode item in xmlNodeList)
-            {
-                var newItem = new Item()
-                {
-                    ModuleId = moduleId,
-                    // assigning everything to the current UserID, because this might be a new DNN installation
-                    // your use case might be different though
-                    CreatedByUserId = userId,
-                    LastModifiedByUserId = userId,
-                    CreatedOnDate = DateTime.Now,
-                    LastModifiedOnDate = DateTime.Now
-                };
+                       // NOTE: If moving from one installation to another, this user will not exist
+                       newItem.AssignedUserId = int.Parse(item.SelectSingleNode("AssignedUserId").InnerText, NumberStyles.Integer);
+                       newItem.ItemDescription = item.SelectSingleNode("ItemDescription").InnerText;
+                       newItem.ItemName = item.SelectSingleNode("ItemName").InnerText;
 
-                // NOTE: If moving from one installation to another, this user will not exist
-                newItem.AssignedUserId = int.Parse(item.SelectSingleNode("AssignedUserId").InnerText, NumberStyles.Integer);
-                newItem.ItemDescription = item.SelectSingleNode("ItemDescription").InnerText;
-                newItem.ItemName = item.SelectSingleNode("ItemName").InnerText;
-
-                controller.CreateItem(newItem);
-            }
-        }
+                       controller.CreateItem(newItem);
+                   }
+               }
+        */
 
         /// -----------------------------------------------------------------------------
         /// <summary>

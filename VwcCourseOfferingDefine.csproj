@@ -71,7 +71,7 @@
     <Compile Include="Components\ClassSchedule.cs" />
     <Compile Include="Components\FeatureController.cs" />
     <Compile Include="Components\ItemController.cs" />
-    <Compile Include="Components\Item.cs" />
+    <Compile Include="Components\CourseOffering.cs" />
     <Compile Include="VwcCourseOfferingDefineModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -119,7 +119,9 @@
     <Content Include="BuildScripts\MSBuild.Community.Tasks.Targets" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\View.ascx.resx" />
+    <Content Include="App_LocalResources\View.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\Edit.ascx.resx" />

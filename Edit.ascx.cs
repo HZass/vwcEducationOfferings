@@ -14,6 +14,8 @@ using System;
 using DotNetNuke.Entities.Users;
 using Vwc.Modules.VwcCourseOfferingDefine.Components;
 using DotNetNuke.Services.Exceptions;
+using DotNetNuke.Data;
+using System.Data;
 
 namespace Vwc.Modules.VwcCourseOfferingDefine
 {
@@ -39,10 +41,23 @@ namespace Vwc.Modules.VwcCourseOfferingDefine
                 if (!Page.IsPostBack)
                 {
                     //get a list of users to assign the user to the Object
-                    ddlAssignedUser.DataSource = UserController.GetUsers(PortalId);
-                    ddlAssignedUser.DataTextField = "Username";
-                    ddlAssignedUser.DataValueField = "UserId";
-                    ddlAssignedUser.DataBind();
+
+                    DataProvider courseQuery = DotNetNuke.Data.DataProvider.Instance();
+                    IDataReader dr = courseQuery.ExecuteReader("Select ID,CourseNumber,CourseTitle FROM VwcCourses");
+                    while(dr.Read())
+                    {
+                        object[] sValues = new object[dr.FieldCount];
+                        int iNumberOfFields = dr.GetValues(sValues);
+                        ddlTargetCourseID.DataTextField = (string)sValues[1] + "  " + (string)sValues[2];
+                        ddlTargetCourseID.DataValueField = sValues[0].ToString();
+                        
+                    }
+                    
+                     ddlTargetCourseID.DataBind();
+                    ddlAssignedInstructor.DataSource = UserController.GetUsers(PortalId);
+                    ddlAssignedInstructor.DataTextField = ("FirstName" + " " + "LastName");
+                    ddlAssignedInstructor.DataValueField = ("UserId");
+                    ddlAssignedInstructor.DataBind();
 
                     //check if we have an ID passed in via a querystring parameter, if so, load that item to edit.
                     //ItemId is defined in the ItemModuleBase.cs file
@@ -53,9 +68,17 @@ namespace Vwc.Modules.VwcCourseOfferingDefine
                         var t = tc.GetItem(ItemId, ModuleId);
                         if (t != null)
                         {
-                            txtName.Text = t.ItemName;
-                            txtDescription.Text = t.ItemDescription;
-                            ddlAssignedUser.Items.FindByValue(t.AssignedUserId.ToString()).Selected = true;
+                            txtCourseTerm.Text = t.CourseTerm;
+                            ddlTargetCourseID.Items.FindByValue(t.CourseNumber.ToString()).Selected = true;
+                            txtCourseSection.Text = t.CourseSection;
+                            ddlAssignedInstructor.Items.FindByValue(t.AssignedUserId.ToString()).Selected = true;
+                            txtSectionDates.Text = t.SectionDates;
+                            txtSectionNotes.Text = t.SectionNote;
+                            calSectionClosedDate.SelectedDate = t.SectionClosedDate;
+                            txtSectionSize.Text = t.SectionSize.ToString();
+                            txtSectionSupplies.Text = t.SectionSupplies;
+                            txtSectionSuppliesFee.Text = t.SectionSuppliesFee.ToString();
+
                         }
                     }
                 }
@@ -69,36 +92,51 @@ namespace Vwc.Modules.VwcCourseOfferingDefine
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            var t = new Item();
+            var t = new CourseOffering();
             var tc = new ItemController();
 
             if (ItemId > 0)
             {
                 t = tc.GetItem(ItemId, ModuleId);
-                t.ItemName = txtName.Text.Trim();
-                t.ItemDescription = txtDescription.Text.Trim();
+                t.CourseTerm = txtCourseTerm.Text.Trim();
+                t.CourseNumber = ddlTargetCourseID.SelectedItem.Text;
+                t.CourseSection = txtCourseTerm.Text.Trim();
+                t.InstructorID = Convert.ToInt32(ddlAssignedInstructor.SelectedValue);
+                t.SectionDates = txtSectionDates.Text.Trim();
+                t.SectionNote = txtSectionNotes.Text.Trim();
+                t.SectionClosedDate = calSectionClosedDate.SelectedDate;
+                t.SectionSize = Convert.ToInt32(txtSectionSize.Text.Trim());
+                t.SectionSupplies = txtSectionSupplies.Text.Trim();
+                t.SectionSuppliesFee = Convert.ToInt32(txtSectionSuppliesFee.Text.Trim());
                 t.LastModifiedByUserId = UserId;
                 t.LastModifiedOnDate = DateTime.Now;
-                t.AssignedUserId = Convert.ToInt32(ddlAssignedUser.SelectedValue);
+                t.AssignedUserId = Convert.ToInt32(ddlTargetCourseID.SelectedValue);
             }
-            else
+            else //insert new
             {
-                t = new Item()
+                t = new CourseOffering()
                 {
-                    AssignedUserId = Convert.ToInt32(ddlAssignedUser.SelectedValue),
+                    AssignedUserId = Convert.ToInt32(ddlTargetCourseID.SelectedValue),
                     CreatedByUserId = UserId,
                     CreatedOnDate = DateTime.Now,
-                    ItemName = txtName.Text.Trim(),
-                    ItemDescription = txtDescription.Text.Trim(),
-
-                };
+                    CourseTerm = txtCourseTerm.Text.Trim(),
+                    CourseNumber = ddlTargetCourseID.SelectedItem.Text,
+                    CourseSection = txtCourseSection.Text.Trim(),
+                    InstructorID = Convert.ToInt32(ddlAssignedInstructor.SelectedValue),
+                    SectionDates = txtSectionDates.Text.Trim(),
+                    SectionNote = txtSectionNotes.Text.Trim(),
+                    SectionClosedDate = calSectionClosedDate.SelectedDate,
+                    SectionSize = Convert.ToInt32(txtSectionSize.Text.Trim()),
+                    SectionSupplies = txtSectionSupplies.Text.Trim(),
+                    SectionSuppliesFee = Convert.ToInt32(txtSectionSuppliesFee.Text.Trim())
+            };
             }
 
             t.LastModifiedOnDate = DateTime.Now;
             t.LastModifiedByUserId = UserId;
             t.ModuleId = ModuleId;
 
-            if (t.ItemId > 0)
+            if (t.Id > 0)
             {
                 tc.UpdateItem(t);
             }

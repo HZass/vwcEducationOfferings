@@ -16,11 +16,11 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
 {
     class ItemController
     {
-        public void CreateItem(Item t)
+        public void CreateItem(CourseOffering t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<Item>();
+                var rep = ctx.GetRepository<CourseOffering>();
                 rep.Insert(t);
             }
         }
@@ -31,45 +31,47 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
             DeleteItem(t);
         }
 
-        public void DeleteItem(Item t)
+        public void DeleteItem(CourseOffering t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<Item>();
+                var rep = ctx.GetRepository<CourseOffering>();
                 rep.Delete(t);
             }
         }
 
-        public IEnumerable<Item> GetItems(int moduleId)
+        public IEnumerable<CourseOffering> GetItems(int moduleId)
         {
-            IEnumerable<Item> t;
+            IEnumerable<CourseOffering> t;
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<Item>();
+                var rep = ctx.GetRepository<CourseOffering>();
                 t = rep.Get(moduleId);
             }
             return t;
         }
 
-        public Item GetItem(int itemId, int moduleId)
+        public CourseOffering GetItem(int itemId, int moduleId)
         {
-            Item t;
+            CourseOffering t;
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<Item>();
+                var rep = ctx.GetRepository<CourseOffering>();
                 t = rep.GetById(itemId, moduleId);
             }
             return t;
         }
 
-        public void UpdateItem(Item t)
+        public void UpdateItem(CourseOffering t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<Item>();
+                var rep = ctx.GetRepository<CourseOffering>();
                 rep.Update(t);
             }
         }
+
+       
 
     }
 }

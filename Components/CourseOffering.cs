@@ -22,10 +22,10 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
     //setup the primary key for table
     [PrimaryKey("Id", AutoIncrement = true)]
     //configure caching using PetaPoco
-    [Cacheable("Items", CacheItemPriority.Default, 20)]
+    [Cacheable("CourseOfferings", CacheItemPriority.Default, 20)]
     //scope the objects to the ModuleId of a module on a page (or copy of a module on a page)
     [Scope("ModuleId")]
-    class Item
+    class CourseOffering
     {
         ///<summary>
         /// The ID of your object with the name of the ItemName
