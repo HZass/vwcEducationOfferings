@@ -43,7 +43,7 @@ namespace Vwc.Modules.VwcCourseOfferingDefine
                     //get a list of users to assign the user to the Object
 
                     DataProvider courseQuery = DotNetNuke.Data.DataProvider.Instance();
-                    IDataReader dr = courseQuery.ExecuteReader("Select ID,CourseNumber,CourseTitle FROM VwcCourses");
+                    IDataReader dr = courseQuery.ExecuteSQL("Select ID,CourseNumber,CourseTitle FROM VwcNewCourses ORDER BY CourseNumber");
                     while(dr.Read())
                     {
                         object[] sValues = new object[dr.FieldCount];
@@ -55,7 +55,7 @@ namespace Vwc.Modules.VwcCourseOfferingDefine
                     
                      ddlTargetCourseID.DataBind();
                     ddlAssignedInstructor.DataSource = UserController.GetUsers(PortalId);
-                    ddlAssignedInstructor.DataTextField = ("FirstName" + " " + "LastName");
+                    ddlAssignedInstructor.DataTextField = ("DisplayName");
                     ddlAssignedInstructor.DataValueField = ("UserId");
                     ddlAssignedInstructor.DataBind();
 

@@ -1,6 +1,6 @@
 <dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="VwcCourseOfferingDefine" type="Module" version="00.00.01">
+    <package name="VwcCourseOfferingDefine" type="Module" version="00.00.05">
       <friendlyName>VwcCourseOfferingDefine</friendlyName>
       <description>The Villages Woodworking Club VwcCourseOfferingDefine module</description>
       <iconFile>~/Images/icon_extensions_32px.png</iconFile>

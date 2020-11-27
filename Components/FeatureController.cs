@@ -85,7 +85,7 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
 
             return searchDocuments;
         }
-        /*
+        
                /// -----------------------------------------------------------------------------
                /// <summary>
                /// ExportModule implements the IPortable ExportModule Interface
@@ -109,14 +109,14 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
                        sb.Append("<CourseOffering>");
 
                        sb.AppendFormat("<AssignedUserId>{0}</AssignedUserId>", item.AssignedUserId);
-                       sb.AppendFormat("<CreatedByUserId>{0}</CreatedByUserId>", item.CreatedByUserId);
-                       sb.AppendFormat("<CreatedOnDate>{0}</CreatedOnDate>", item.CreatedOnDate);
-                       sb.AppendFormat("<ItemId>{0}</ItemId>", item.ItemId);
-                       sb.AppendFormat("<ItemDescription>{0}</ItemDescription>", XmlUtils.XMLEncode(item.ItemDescription));
-                       sb.AppendFormat("<ItemName>{0}</ItemName>", XmlUtils.XMLEncode(item.ItemName));
-                       sb.AppendFormat("<LastModifiedByUserId>{0}</LastModifiedByUserId>", item.LastModifiedByUserId);
-                       sb.AppendFormat("<LastModifiedOnDate>{0}</LastModifiedOnDate>", item.LastModifiedOnDate);
-                       sb.AppendFormat("<ModuleId>{0}</ModuleId>", item.ModuleId);
+                     //  sb.AppendFormat("<CreatedByUserId>{0}</CreatedByUserId>", item.CreatedByUserId);
+                     //  sb.AppendFormat("<CreatedOnDate>{0}</CreatedOnDate>", item.CreatedOnDate);
+                    //   sb.AppendFormat("<ItemId>{0}</ItemId>", item.ItemId);
+                      // sb.AppendFormat("<ItemDescription>{0}</ItemDescription>", XmlUtils.XMLEncode(item.ItemDescription));
+                      // sb.AppendFormat("<ItemName>{0}</ItemName>", XmlUtils.XMLEncode(item.ItemName));
+                      // sb.AppendFormat("<LastModifiedByUserId>{0}</LastModifiedByUserId>", item.LastModifiedByUserId);
+                     //  sb.AppendFormat("<LastModifiedOnDate>{0}</LastModifiedOnDate>", item.LastModifiedOnDate);
+                      // sb.AppendFormat("<ModuleId>{0}</ModuleId>", item.ModuleId);
 
                        sb.Append("</CourseOffering>");
                    }
@@ -160,13 +160,13 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
 
                        // NOTE: If moving from one installation to another, this user will not exist
                        newItem.AssignedUserId = int.Parse(item.SelectSingleNode("AssignedUserId").InnerText, NumberStyles.Integer);
-                       newItem.ItemDescription = item.SelectSingleNode("ItemDescription").InnerText;
-                       newItem.ItemName = item.SelectSingleNode("ItemName").InnerText;
+                      // newItem.ItemDescription = item.SelectSingleNode("ItemDescription").InnerText;
+                     //  newItem.ItemName = item.SelectSingleNode("ItemName").InnerText;
 
                        controller.CreateItem(newItem);
                    }
                }
-        */
+       
 
         /// -----------------------------------------------------------------------------
         /// <summary>

@@ -16,8 +16,8 @@
             <dnn:label ID="lblAssignedUser" runat="server" />
             <asp:DropDownList ID="ddlAssignedUser" runat="server" />
               -->
-              <dnn:label ID =" lblChooseCourse" runat="server" />
-              <asp:DropDownList ID =" ddlTargetCourseID" runat="server" />
+              <dnn:label ID ="lblChooseCourse" runat="server" />
+              <asp:DropDownList ID ="ddlTargetCourseID" runat="server" />
          </div>
         <div class="dnnFormItem">
             <dnn:label ID="lblCourseSection" runat="server" />
