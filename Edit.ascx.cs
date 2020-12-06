@@ -70,7 +70,7 @@ namespace Vwc.Modules.VwcCourseOfferingDefine
                         {
                             txtCourseTerm.Text = t.CourseTerm;
                             ddlTargetCourseID.Items.FindByValue(t.CourseNumber.ToString()).Selected = true;
-                            txtCourseSection.Text = t.CourseSection;
+                            txtCourseSection.Text = t.SectionID;
                             ddlAssignedInstructor.Items.FindByValue(t.AssignedUserId.ToString()).Selected = true;
                             txtSectionDates.Text = t.SectionDates;
                             txtSectionNotes.Text = t.SectionNote;
@@ -100,7 +100,7 @@ namespace Vwc.Modules.VwcCourseOfferingDefine
                 t = tc.GetItem(ItemId, ModuleId);
                 t.CourseTerm = txtCourseTerm.Text.Trim();
                 t.CourseNumber = ddlTargetCourseID.SelectedItem.Text;
-                t.CourseSection = txtCourseTerm.Text.Trim();
+                t.SectionID = txtCourseTerm.Text.Trim();
                 t.InstructorID = Convert.ToInt32(ddlAssignedInstructor.SelectedValue);
                 t.SectionDates = txtSectionDates.Text.Trim();
                 t.SectionNote = txtSectionNotes.Text.Trim();
@@ -121,7 +121,7 @@ namespace Vwc.Modules.VwcCourseOfferingDefine
                     CreatedOnDate = DateTime.Now,
                     CourseTerm = txtCourseTerm.Text.Trim(),
                     CourseNumber = ddlTargetCourseID.SelectedItem.Text,
-                    CourseSection = txtCourseSection.Text.Trim(),
+                    SectionID = txtCourseSection.Text.Trim(),
                     InstructorID = Convert.ToInt32(ddlAssignedInstructor.SelectedValue),
                     SectionDates = txtSectionDates.Text.Trim(),
                     SectionNote = txtSectionNotes.Text.Trim(),

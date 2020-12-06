@@ -20,14 +20,14 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CourseOffering>();
+                IRepository<CourseOffering> rep = ctx.GetRepository<CourseOffering>();
                 rep.Insert(t);
             }
         }
 
-        public void DeleteItem(int itemId, int moduleId)
+        public void DeleteItem(int Id, int moduleId)
         {
-            var t = GetItem(itemId, moduleId);
+            CourseOffering t = GetItem(Id, moduleId);
             DeleteItem(t);
         }
 
@@ -35,7 +35,7 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CourseOffering>();
+                IRepository<CourseOffering> rep = ctx.GetRepository<CourseOffering>();
                 rep.Delete(t);
             }
         }
@@ -45,8 +45,9 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
             IEnumerable<CourseOffering> t;
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CourseOffering>();
-                t = rep.Get(moduleId);
+                //IRepository<CourseOffering> rep = ctx.GetRepository<CourseOffering>();
+                t = ctx.ExecuteQuery<CourseOffering>(System.Data.CommandType.TableDirect, "Select * From VWCNewCourseOfferings Where ModuleID = moduleID ORDER BY CourseNumber", "");
+                //t = rep.Get(moduleId);
             }
             return t;
         }
@@ -56,7 +57,7 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
             CourseOffering t;
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CourseOffering>();
+                IRepository<CourseOffering> rep = ctx.GetRepository<CourseOffering>();
                 t = rep.GetById(itemId, moduleId);
             }
             return t;
@@ -66,7 +67,7 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CourseOffering>();
+                IRepository<CourseOffering> rep = ctx.GetRepository<CourseOffering>();
                 rep.Update(t);
             }
         }

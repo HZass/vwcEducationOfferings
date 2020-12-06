@@ -55,16 +55,16 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
         public override IList<SearchDocument> GetModifiedSearchDocuments(ModuleInfo moduleInfo, DateTime beginDate)
         {
             var searchDocuments = new List<SearchDocument>();
-            var controller = new ItemController();
-            var items = controller.GetItems(moduleInfo.ModuleID);
+            ItemController controller = new ItemController();
+            IEnumerable<CourseOffering> items = controller.GetItems(moduleInfo.ModuleID);
 
-            foreach (var item in items)
+            foreach (CourseOffering item in items)
             {
                 if (item.LastModifiedOnDate.ToUniversalTime() <= beginDate.ToUniversalTime() ||
                     item.LastModifiedOnDate.ToUniversalTime() >= DateTime.UtcNow)
                     continue;
 
-                var content = string.Format("{0}<br />{1}", item.CourseNumber, item.CourseSection);
+                var content = string.Format("{0}<br />{1}", item.CourseNumber, item.SectionID);
 
                 var searchDocumnet = new SearchDocument
                 {
@@ -95,10 +95,10 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
                public string ExportModule(int moduleId)
                {
                    var controller = new ItemController();
-                   var items = controller.GetItems(moduleId);
+            IEnumerable<CourseOffering> items = controller.GetItems(moduleId);
                    var sb = new StringBuilder();
 
-                   var itemList = items as IList<CourseOffering> ?? items.ToList();
+            IList<CourseOffering> itemList = items as IList<CourseOffering> ?? items.ToList();
 
                    if (!itemList.Any()) return string.Empty;
 

@@ -36,7 +36,7 @@ namespace Vwc.Modules.VwcCourseOfferingDefine.Components
         ///</summary>
         public string CourseTerm { get; set; }
         public string CourseNumber { get; set; }
-        public string CourseSection { get; set; }
+        public string SectionID { get; set; }
         public int InstructorID { get; set; }
         public string SectionDates { get; set; }         
         public string SectionNote { get; set; }
